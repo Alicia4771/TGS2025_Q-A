@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        details {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: .75rem 1rem;
+            margin: .5rem 0;
+            background: #fafafa;
+        }
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            list-style: none; /* Firefox 用 */
+        }
+
+        /* 既定の三角マーカーを消して独自のアイコンを付ける */
+        summary::-webkit-details-marker { display: none; }
+        summary::before {
+            content: "▸";
+            display: inline-block;
+            width: 1em;
+            transition: transform .2s;
+            margin-right: .25rem;
+        }
+        details[open] summary::before { transform: rotate(90deg); }
+        .answer { margin-top: .5rem; line-height: 1.8; }
+    </style>
+</head>
+<body>
+    <h1>芋虫ゲームのQ&A</h1>
+    <h2>1. ゲームの内容について</h2>
+    <details>
+        <summary>Q1-1. 難易度選択</summary>
+            <div class="answer">
+                難易度は、「簡単」・「普通」の２段階があります。腹筋ローラーを黄色い葉っぱの線まで伸ばしたあと緑の線まで戻せば「簡単モード」、奥の赤い葉っぱの線まで伸ばしたあと緑の線まで戻せば「普通モード」となります。
+            </div>
+    </details>
+    <details>
+        <summary>Q1-2. </summary>
+            <div class="answer">
+                //
+            </div>
+    </details>
+</body>
+</html>
