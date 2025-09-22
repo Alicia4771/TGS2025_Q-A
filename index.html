@@ -35,7 +35,7 @@
     <h1>芋虫ゲームのQ&A</h1>
     <h2>1. ゲームの内容について</h2>
     <details>
-        <summary>Q1-1. 難易度選択</summary>
+        <summary>Q1-1. 難易度選択はどうなってるの？</summary>
             <div class="answer">
                 難易度は、「簡単」・「普通」の２段階があります。腹筋ローラーを黄色い葉っぱの線まで伸ばしたあと緑の線まで戻せば「簡単モード」、奥の赤い葉っぱの線まで伸ばしたあと緑の線まで戻せば「普通モード」となります。
             </div>
@@ -45,6 +45,25 @@
             <div class="answer">
                 //
             </div>
+    </details>
+
+    <h2>2. ゲーム制作について</h2>
+    <details>
+        <summary>Q2-1. どんなセンサーを使っているの？</summary>
+            <div class="answer">
+                schoomyの距離センサーを使っています。これは、超音波を使って距離を測定するセンサーです。センサーから超音波を出し、物体に当たって跳ね返ってくるまでの時間を測定することで距離を計算しています。
+            </div>
+    </details>
+    <details>
+        <summary>Q2-2. どうやってキャラクターを動かしているの？</summary>
+            <div class="answer">
+                schoomyの距離センサーからリアルタイムで値を所得してUnityに送っています。Unityでは取得した値を元にキャラクターの位置を更新しています。
+            </div> 
+    </details>
+    <details>
+        <summary>Q2-3. キャラクターを前進させるのはどうやっているの？</summary>
+            <div class="answer">
+                
     </details>
 </body>
 </html>
