@@ -27,7 +27,10 @@
             transition: transform .2s;
             margin-right: .25rem;
         }
-        details[open] summary::before { transform: rotate(90deg); }
+
+        details[open] > summary::before {
+            transform: rotate(90deg);
+        }
         .answer { margin-top: .5rem; line-height: 1.8; }
     </style>
 </head>
@@ -41,7 +44,13 @@
             </div>
     </details>
     <details>
-        <summary>Q1-2. </summary>
+        <summary>Q1-2. 1プレイは何分くらいですか？</summary>
+            <div class="answer">
+                各難易度ごとに制限時間が設定されていて、「簡単モード」なら80秒、「普通モード」なら120秒です。
+            </div>
+    </details>
+    <details>
+        <summary>Q1-3. </summary>
             <div class="answer">
                 //
             </div>
@@ -78,7 +87,7 @@
                 <details>
                     <summary>具体的に</summary>
                         <div class="answer">
-                            過去32回分の距離センサーからの値を、キャラクターを動かすためのスクリプト内で１次元配列として保持しておき、距離センサーから値が送られてくる度に、「横軸がindex番号を逆順から、縦軸が距離センサーからの値」という座標平面を考えここに32個全ての値をプロットしていきます。
+                            過去32回分の距離センサーからの値を、キャラクターを動かすためのスクリプト内で１次元配列として保持しておき、距離センサーから値が送られてくる度に、「横軸がindex番号を逆順から、縦軸が距離センサーからの値」という座標平面を考えここに32個全ての値をプロットしていきます。そして、最新の値（index番号が31番の値）が原点に来るように、全ての値を並行移動させます。次に、これらの値を原点を通る１次式で近似し、その直線の傾きを求めます。その値が正であれば腹筋ローラーを前に伸ばしている、負であれば腹筋ローラーを手前に引いていると判断できます。
                         </div>
                 </details>
             </div>
