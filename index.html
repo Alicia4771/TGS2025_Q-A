@@ -6,11 +6,31 @@
     <title>TGS2025_はばたけムキムキいもむしマスター</title>
     <link rel="stylesheet" href="./src/assets/css/startPage.css" />
 </head>
-<body>
-    <h1>はばたけムキムキいもむしマスター</h1>
+<body onload="imageSizeSet()" onresize="imageSizeSet()">
+    <img src="./src/assets/picture/main_image.png" id="main_image" />
     <p>
         TGS2025_３日目、9/27(土)に出展します。
     </p>
     <a href="./src/QandA.html" class="QA_button">Q&Aはこちら！</a>
+
+    <script>
+        const imageSizeSet = () => {
+            const main_image = document.getElementById("main_image");
+            const win_width = window.innerWidth;
+            const win_height = window.innerHeight;
+            const img_width = main_image.naturalWidth;      // 1920
+            const img_height = main_image.naturalHeight;    // 1080 => 横：縦＝16：9
+
+            if (win_width / win_height > img_width / img_height) {
+                // 画面が横長 => 画面の幅に合わせる
+                main_image.style.width = "100%";
+                main_image.style.height = "auto";
+            } else {
+                // 画面が縦長 => 画面の高さに合わせる
+                main_image.style.width = "auto";
+                main_image.style.height = "100%";
+            }
+        }
+    </script>
 </body>
 </html>
