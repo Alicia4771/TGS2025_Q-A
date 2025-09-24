@@ -21,14 +21,22 @@
             const img_width = main_image.naturalWidth;      // 1920
             const img_height = main_image.naturalHeight;    // 1080 => 横：縦＝16：9
 
-            if (win_width / win_height > img_width / img_height) {
-                // 画面が横長 => 画面の幅に合わせる
-                main_image.style.width = "100%";
-                main_image.style.height = "auto";
+            if (win_width / img_width > win_height / img_height) {
+                if (win_height > img_hight) {
+                    main_image.style.height = img_height + "px";
+                    main_image.style.width = "auto";
+                } else {
+                    main_image.style.height = win_height + "px";
+                    main_image.style.width = "auto";
+                }
             } else {
-                // 画面が縦長 => 画面の高さに合わせる
-                main_image.style.width = "auto";
-                main_image.style.height = "100%";
+                if (win_width > img_width) {
+                    main_image.style.width = img_width + "px";
+                    main_image.style.height = "auto";
+                } else {
+                    main_image.style.width = win_width + "px";
+                    main_image.style.height = "auto";
+                }
             }
         }
     </script>
