@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A</title>
+    <style>
+        details {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: .75rem 1rem;
+            margin: .5rem 0;
+            background: #fafafa;
+        }
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            list-style: none; /* Firefox 用 */
+        }
+
+        /* 既定の三角マーカーを消して独自のアイコンを付ける */
+        summary::-webkit-details-marker { display: none; }
+        summary::before {
+            content: "▸";
+            display: inline-block;
+            width: 1em;
+            transition: transform .2s;
+            margin-right: .25rem;
+        }
+
+        details[open] > summary::before {
+            transform: rotate(90deg);
+        }
+        .answer { margin-top: .5rem; line-height: 1.8; }
+    </style>
+    
+    <!-- MathJax を追加 -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <h1>Game Q&A</h1>
+    <p>
+        <!-- このページは日本語版のQ&Aページを英語に翻訳したものです。翻訳には翻訳ツールを使用しているため、ご了承ください。 -->
+        This page is a translation of the Japanese Q&A into English. Please note that translation tools were used for this translation.
+    </p>
+    <h2>1. About the game's content</h2>
+    <details>
+        <summary><span style="color: #ed2121;">First up, this!</span></summary>
+            <div class="answer">
+                You can watch the tutorial video via the link in the QR code below. Please take a look!
+                <br>
+                <img src="./assets/picture/tutorial_qr.png" alt="チュートリアルの動画のリンクのqrコード" title="チュートリアルの動画のリンクのqrコード" width="200" height="200">
+                <br>
+                You can also view it via the link below.
+                <br>
+                <a href="https://drive.google.com/file/d/1SU7uafm-JjhuoYs76C8XnxSBoK2JRYGv/view?usp=sharing">ここのリンクをクリック</a>
+            </div>
+    </details>
+    <details>
+        <summary>Q1-1. How does the difficulty selection work?</summary>
+            <div class="answer">
+                There are two difficulty levels: “Easy” and “Normal.” For “Easy Mode,” roll the ab roller out to the yellow leaf line and then back to the green line. For “Normal Mode,” roll it out to the far red leaf line and then back to the green line.
+                <br>
+                ※In-game text displays as “かんたん” and “ふつう” in hiragana.
+            </div>
+    </details>
+    <details>
+        <summary>Q1-2. How long is one play?</summary>
+            <div class="answer">
+                Each difficulty level has a time limit set: 80 seconds for Easy Mode and 120 seconds for Normal Mode.
+            </div>
+    </details>
+    <details>
+        <summary>Q1-3. </summary>
+            <div class="answer">
+                //
+            </div>
+    </details>
+
+    <h2>2. ゲーム制作について</h2>
+    <details>
+        <summary>Q2-1. どんなセンサーを使っているの？</summary>
+            <div class="answer">
+                schoomyの距離センサーを使っています。これは、超音波を使って距離を測定するセンサーです。センサーから超音波を出し、物体に当たって跳ね返ってくるまでの時間を測定することで距離を計算しています。
+            </div>
+    </details>
+    <details>
+        <summary>Q2-2. schoomyのプログラムってどうやるの？</summary>
+            <div class="answer">
+                schoomyは、Scratchベースのビジュアルプログラミング環境を使ってプログラムを作成します。ブロックを組み合わせてプログラムを作成し、センサーの値を取得したり、Unityにデータを送信したりします。
+                <br>
+                ※以下の画像は、実際にschoomyでプログラムを作成している様子です。
+                <br>
+                <img src="./assets/picture/schoomy_image.png" alt="schoomyでの作成の様子" title="schoomyでの作成の様子" width="300" height="200">
+            </div>
+    </details>
+    <details>
+        <summary>Q2-3. どうやってキャラクターを動かしているの？</summary>
+            <div class="answer">
+                schoomyの距離センサーからリアルタイムで値を所得してUnityに送っています。Unityでは取得した値を元に、プレイヤーがどの様な操作をしているかを判定して、それに合わせてキャラクターの動きを制御しています。
+            </div> 
+    </details>
+    <details>
+        <summary>Q2-4. キャラクターを前進させるのはどうやっているの？</summary>
+            <div class="answer">
+                腹筋ローラーを前に伸ばすと距離センサーの値が小さくなり、反対に、腹筋ローラーを手前に引くと距離センサーの値が大きくなります。基本的には、距離センサーからの値が小さくなれば腹筋ローラーを前に伸ばしている、距離センサーからの値が大きくなれば腹筋ローラーを手前に引いていると判定されます。しかし、距離センサーの値にはノイズが入りやすいため、距離センサーからの値をそのまま使うとキャラクターが意図しない挙動をすることがあります。そこで、距離センサーからの値を平均的に値を扱うことでノイズの影響を軽減しています。
+                <br>
+                <details>
+                    <summary>具体的に</summary>
+                        <div class="answer">
+                            過去32回分の距離センサーからの値を、キャラクターを動かすためのスクリプト内で１次元配列として保持しておき、距離センサーから値が送られてくる度に、配列内の全ての値を１つ前にずらして最後尾に新しい値を入れます。そして、「横軸がindex番号を逆順から（新しい順）、縦軸が距離センサーからの値」という座標平面を考えここに32個全ての値をプロットしていきます。次に、最新の値（index番号が一番大きい値）が原点に来るように、全ての点を並行移動させます。そして、これらの点を原点を通る１次式で近似し、その直線の傾きを求めます。その値が正であれば腹筋ローラーを前に伸ばしている、負であれば腹筋ローラーを手前に引いていると判断できます。ただし、傾きの絶対値が一定の値未満の場合は、腹筋ローラーを動かしていないと判断します。
+                            <details>
+                                <summary>なんで32回分なの？</summary>
+                                    <div class="answer">
+                                        一言で言うと、試行錯誤の結果です。初めは20回で作っていましたが、動作確認を繰り返して、やっぱりもうちょっとノイズを減らしたいという結論になりました。確かに、保持する数を増やせば増やすほどノイズは減っていきます。しかし、保持する数を増やす程、値をプロットして作った直線の傾きが、最新の値に対して鈍感になってしまいます。そこで、ノイズを減らしつつ、最新の値に対してもある程度敏感に反応するようにいろんな数で試したところ、32回分という数に落ち着きました。
+                                    </div>
+                            </details>
+                            <details>
+                                <summary>どうやって１次近似をしているの？</summary>
+                                    <div class="answer">
+                                        平均二乗誤差が最も小さくなるような、原点を通る直線（\(y = ax\)）を求めています。以下の式で、その傾き\(a\)を求めることができます。$$a = \sqrt{\frac{\sum x_{i} y_{i}}{\sum x_{i}^2}}$$
+                                    </div>
+                            </details>
+                        </div>
+                </details>
+            </div>
+    </details>
+    <details>
+        <summary>Q2-5. ジャンプはどうしているの？</summary>
+            <div class="answer">
+                ジャンプでどのくらい飛ぶかは、「チャージゲージがどれだけたまっているか」と「ジャンプする時に腹筋ローラーをどれだけ前に伸ばしたか」の２つの要素で決まります。ジャンプした時にチャージゲージが溜まっている程、鉛直上向きの初速度が大きくなります。また、ジャンプした時に腹筋ローラーを前に伸ばしている程、前方への初速度が大きくなります。これらの鉛直方向と水平方向の初速度を元に、斜方投射の式を使ってジャンプの軌道を計算しています。`Time.deltaTime`を使えば、１フレームの時間を取得できるため、ジャンプ開始時点の時刻をt = 0として、Update関数の中でTransform.positionにジャンプの軌道の計算結果を代入して、ジャンプの動きを実現しています。
+                <br>
+                <details>
+                    <summary>どうしてUnityの物理演算を使わなかったの？（裏話的な感じになります）</summary>
+                        <div class="answer">
+                            一言で言えば、作り直すのが大変だったからです。もともと、芋虫が前進する動きもジャンプの動きも、どちらもTransform.positionの値を毎フレーム書き換えることで実現していました。しかし、ある時実際に動作確認をしていたら、センサーの値を受け取ってから約３秒という非常に大きなラグが発生していることに気がつきました。その原因を調べたところ、「Transform.positioinを毎フレーム上書きするのは、かなり負荷がかかること」だと分かり、試しに前進の動きをRigidbodyを使った物理演算に変えてみたところ、ラグが大幅に解消され、気にならない程になりました。そこで、ジャンプの動きの方もAddForce関数を使って書き換えようと思いましたが、これまで、物体に重力がかからない設定でゲームを作っていて、ジャンプの水平方向の動きはAddForce関数を使っても問題ありませんが、鉛直方向の動きは、重力がかからないため、AddForce関数を使うとずっと上に飛んでいってしまいます。しかし、重力がかかる設定に変えると、今まで通りうまく動かなくなるかもしれないとリーダーに言われ、ジャンプの動きはTransform.positionによる制御でもラグが目立たなかったため、ジャンプの動きはそのままにしておくことにしました。
+                        </div>
+                </details>
+                <details>
+                    <summary>ジャンプの裏話（上の続き的な）</summary>
+                        <div class="answer">
+                            ジャンプの動きは最後までTransform.positionによる制御のままでしたが、その中で何度も仕様変更がありました。プレイヤーが操作できるのは、チャージゲージとジャンプ時の伸ばした量の２つというのは最初から変わりませんが、もともとは鉛直方向の力と水平方向の力は分かれていませんでした。ジャンプする角度を45°で固定して、２つの量にそれぞれ調整用の値をかけた値を足し合わせて、それを初速度として扱っていました。その状態でオープンキャンパスで来校者の方に実際にプレイしてもらったところ、「チャージゲージさえ溜めてしまえばジャンプする時に腹筋ローラーをあまり伸ばさなくても遠くまでジャンプできてしまい、腹筋ローラーを伸ばす必要性が少ない」という意見があがりました。そこで、チャージゲージとジャンプ時に腹筋ローラーを伸ばした量を別々に扱うようにすることにしました。そして、鉛直方向の運動にチャージゲージを紐付け、水平方向の運動にジャンプ時に腹筋ローラーを伸ばした量を紐付けることにしました。これにより、チャージゲージを溜めるだけで腹筋ローラーをあまり伸ばさないと、上にだけ高く飛んでほぼ垂直に落ちるようになり、大きくジャンプするにはチャージゲージを十分に溜めた上で、ジャンプする時に腹筋ローラーをしっかり前まで伸ばす必要が出てきました。これでジャンプのゲーム性の問題は解消されましたが、動作確認をしていたところ、ジャンプ時に伸ばした量の値をそのまま使っていると、ジャンプする時のブレ（腹筋ローラーを遠くまで伸ばしたのに、ほぼ真上に飛んでしまう）が大きく安定してジャンプがうまく出来ないことがわかりました。そこで、ジャンプを「弱」、「中」、「強」、「弱以下」の４段階に分けてみたところ、ジャンプのブレが小さくなり、安定してジャンプできるようになりました。ただ、これでも上手く判定してくれないことがたまにありますが、前の状態に比べれば大きく改善されていたため、これで良しとしました。
+                        </div>
+                </details>
+            </div>
+    </details>
+</body>
+</html>
