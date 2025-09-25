@@ -20,6 +20,8 @@ body {
 
 p { font-size: 1rem; margin: 0.75em 0; }
 
+a { text-decoration: none; }
+
 .QA_button {
     display: block;
     margin-left: auto;
@@ -33,7 +35,6 @@ p { font-size: 1rem; margin: 0.75em 0; }
     box-shadow: 0 4px 8px rgba(0, 114, 255, 0.4);
     cursor: pointer;
     transition: box-shadow 0.3s;
-    text-decoration: none;
     transition: box-shadow .3s, opacity .05s;
 }
 
