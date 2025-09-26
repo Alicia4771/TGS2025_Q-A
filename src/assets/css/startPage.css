@@ -21,30 +21,3 @@ body {
 p { font-size: 1rem; margin: 0.75em 0; }
 
 a { text-decoration: none; }
-
-.QA_button {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 10px 20px;
-    font-weight: bold;
-    background: linear-gradient(90deg, #0ac70a, #5cf43e);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0, 114, 255, 0.4);
-    cursor: pointer;
-    transition: box-shadow 0.3s;
-    transition: box-shadow .3s, opacity .05s;
-}
-
-.QA_button:hover,
-.QA_button:focus-visible {               /* キーボード操作でも同じ効果 */
-  box-shadow: 0 6px 12px rgba(0, 114, 255, 0.6);
-}
-
-.QA_button:active {
-  opacity: .5;
-}
-
-.QA_button:visited { color: white; }
