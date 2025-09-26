@@ -89,30 +89,30 @@
             </div>
     </details>
     <details>
-        <summary>Q2-3. どうやってキャラクターを動かしているの？</summary>
+        <summary>Q2-3. How do you animate the characters?</summary>
             <div class="answer">
-                schoomyの距離センサーからリアルタイムで値を所得してUnityに送っています。Unityでは取得した値を元に、プレイヤーがどの様な操作をしているかを判定して、それに合わせてキャラクターの動きを制御しています。
+                We are obtaining values in real time from the Schoomy distance sensor and sending them to Unity. In Unity, based on the acquired values, we determine what kind of operation the player is performing and control the character's movements accordingly.
             </div> 
     </details>
     <details>
-        <summary>Q2-4. キャラクターを前進させるのはどうやっているの？</summary>
+        <summary>Q2-4. How do you make the character move forward?</summary>
             <div class="answer">
-                腹筋ローラーを前に伸ばすと距離センサーの値が小さくなり、反対に、腹筋ローラーを手前に引くと距離センサーの値が大きくなります。基本的には、距離センサーからの値が小さくなれば腹筋ローラーを前に伸ばしている、距離センサーからの値が大きくなれば腹筋ローラーを手前に引いていると判定されます。しかし、距離センサーの値にはノイズが入りやすいため、距離センサーからの値をそのまま使うとキャラクターが意図しない挙動をすることがあります。そこで、距離センサーからの値を平均的に値を扱うことでノイズの影響を軽減しています。
+                When you extend the ab roller forward, the distance sensor value decreases; conversely, when you pull the ab roller toward you, the distance sensor value increases. Fundamentally, a smaller value from the distance sensor indicates the ab roller is being pushed forward, while a larger value indicates it is being pulled back. However, the distance sensor value is prone to noise. Using the raw sensor value directly can cause the character to behave unexpectedly. Therefore, we mitigate the noise's impact by averaging the distance sensor values.
                 <br>
                 <details>
-                    <summary>具体的に</summary>
+                    <summary>Specifically</summary>
                         <div class="answer">
-                            過去32回分の距離センサーからの値を、キャラクターを動かすためのスクリプト内で１次元配列として保持しておき、距離センサーから値が送られてくる度に、配列内の全ての値を１つ前にずらして最後尾に新しい値を入れます。そして、「横軸がindex番号を逆順から（新しい順）、縦軸が距離センサーからの値」という座標平面を考えここに32個全ての値をプロットしていきます。次に、最新の値（index番号が一番大きい値）が原点に来るように、全ての点を並行移動させます。そして、これらの点を原点を通る１次式で近似し、その直線の傾きを求めます。その値が正であれば腹筋ローラーを前に伸ばしている、負であれば腹筋ローラーを手前に引いていると判断できます。ただし、傾きの絶対値が一定の値未満の場合は、腹筋ローラーを動かしていないと判断します。
+                            The script storing the character's movement holds the last 32 distance sensor readings as a one-dimensional array. Each time a new value arrives from the sensor, all existing values in the array are shifted one position forward, with the new value added to the end. We then consider a coordinate plane where the horizontal axis represents the index number in reverse order (newest first) and the vertical axis represents the distance sensor value. All 32 values are plotted on this plane. Next, we parallel-shift all points so that the latest value (the one with the largest index number) is at the origin. We then approximate these points with a linear equation passing through the origin and calculate the slope of this line. If the slope value is positive, we determine that the ab roller is being pushed forward; if negative, it is being pulled back. However, if the absolute value of the slope is below a certain threshold, we determine that the ab roller is not being moved.
                             <details>
-                                <summary>なんで32回分なの？</summary>
+                                <summary>Why 32 times?</summary>
                                     <div class="answer">
-                                        一言で言うと、試行錯誤の結果です。初めは20回で作っていましたが、動作確認を繰り返して、やっぱりもうちょっとノイズを減らしたいという結論になりました。確かに、保持する数を増やせば増やすほどノイズは減っていきます。しかし、保持する数を増やす程、値をプロットして作った直線の傾きが、最新の値に対して鈍感になってしまいます。そこで、ノイズを減らしつつ、最新の値に対してもある程度敏感に反応するようにいろんな数で試したところ、32回分という数に落ち着きました。
+                                        In a nutshell, it's the result of trial and error. Initially, I was using 20 iterations, but after repeated testing, I concluded I wanted to reduce the noise a bit more. Indeed, increasing the number of iterations does reduce noise. However, the more iterations used, the less sensitive the slope of the line created by plotting the values becomes to the latest data point. So, I experimented with various numbers to find a balance between reducing noise and maintaining some responsiveness to the latest values, settling on 32 iterations.
                                     </div>
                             </details>
                             <details>
-                                <summary>どうやって１次近似をしているの？</summary>
+                                <summary>How are you performing the first-order approximation?</summary>
                                     <div class="answer">
-                                        平均二乗誤差が最も小さくなるような、原点を通る直線（\(y = ax\)）を求めています。以下の式で、その傾き\(a\)を求めることができます。$$a = \sqrt{\frac{\sum x_{i} y_{i}}{\sum x_{i}^2}}$$
+                                        We are seeking the line（\(y = ax\)）passing through the origin that minimizes the mean squared error.以下の式で、その傾き\(a\)を求めることができます。$$a = \sqrt{\frac{\sum x_{i} y_{i}}{\sum x_{i}^2}}$$
                                     </div>
                             </details>
                         </div>
