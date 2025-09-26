@@ -120,9 +120,9 @@
             </div>
     </details>
     <details>
-        <summary>Q2-5. ジャンプはどうしているの？</summary>
+        <summary>Q2-5. How's Jump doing?</summary>
             <div class="answer">
-                ジャンプでどのくらい飛ぶかは、「チャージゲージがどれだけたまっているか」と「ジャンプする時に腹筋ローラーをどれだけ前に伸ばしたか」の２つの要素で決まります。ジャンプした時にチャージゲージが溜まっている程、鉛直上向きの初速度が大きくなります。また、ジャンプした時に腹筋ローラーを前に伸ばしている程、前方への初速度が大きくなります。これらの鉛直方向と水平方向の初速度を元に、斜方投射の式を使ってジャンプの軌道を計算しています。`Time.deltaTime`を使えば、１フレームの時間を取得できるため、ジャンプ開始時点の時刻をt = 0として、Update関数の中でTransform.positionにジャンプの軌道の計算結果を代入して、ジャンプの動きを実現しています。
+                How far you jump is determined by two factors: “how much the charge gauge is filled” and “how far forward you extend the ab roller when jumping”. The more the charge gauge is filled when you jump, the greater your initial vertical upward velocity becomes. Additionally, the further forward you extend the ab roller when jumping, the greater your forward initial velocity becomes. Using these initial velocities in the vertical and horizontal directions, the jump trajectory is calculated using the equation for oblique projection. By using `Time.deltaTime` to obtain the time per frame, the jump start time is set as t = 0. Within the Update function, the calculated jump trajectory result is assigned to Transform.position to implement the jump movement.
                 <br>
                 <details>
                     <summary>どうしてUnityの物理演算を使わなかったの？（裏話的な感じになります）</summary>
