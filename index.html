@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./src/assets/css/button_design/QA_english_button.css"></link>
 </head>
 <body onload="imageSizeSet()" onresize="imageSizeSet()">
-    <!-- <img src="./src/assets/picture/main_image.png" id="main_image" /> -->
+    <div id="main_imge"></div>
     <p>
         TGS2025_３日目、9/27(土)に出展します。
     </p>
@@ -20,27 +20,27 @@
 
     <script>
         const imageSizeSet = () => {
-            const main_image = document.getElementById("main_image");
+            const image_space = document.getElementById("main_imge");
             const win_width = window.innerWidth;
             const win_height = window.innerHeight;
-            const img_width = main_image.naturalWidth;      // 1920
-            const img_height = main_image.naturalHeight;    // 1080 => 横：縦＝16：9
+            const img_width = 1920;      // 1920
+            const img_height = 1080;    // 1080 => 横：縦＝16：9
 
             if (win_width / img_width > win_height / img_height) {
                 if (win_height > img_height) {
-                    main_image.style.height = img_height + "px";
-                    main_image.style.width = "auto";
+                    image_space.style.height = img_height + "px";
+                    image_space.style.width = img_width + "px";
                 } else {
-                    main_image.style.height = win_height + "px";
-                    main_image.style.width = "auto";
+                    image_space.style.height = win_height + "px";
+                    image_space.style.width = win_height * (16 / 9) + "px";
                 }
             } else {
                 if (win_width > img_width) {
-                    main_image.style.width = img_width + "px";
-                    main_image.style.height = "auto";
+                    image_space.style.width = img_width + "px";
+                    image_space.style.height = img_height + "px";
                 } else {
-                    main_image.style.width = win_width + "px";
-                    main_image.style.height = "auto";
+                    image_space.style.width = win_width + "px";
+                    image_space.style.height = win_width * (9 / 16) + "px";
                 }
             }
         }
