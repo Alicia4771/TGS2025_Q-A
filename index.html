@@ -23,27 +23,33 @@
     <script>
         const imageSizeSet = () => {
             const image_space = document.getElementById("main_imge");
-            const win_width = window.innerWidth;
-            const win_height = window.innerHeight;
-            const img_width = 1920;      // 1920
-            const img_height = 1080;    // 1080 => 横：縦＝16：9
 
-            if (win_width / img_width > win_height / img_height) {
-                if (win_height > img_height) {
-                    image_space.style.height = img_height + "px";
-                    image_space.style.width = img_width + "px";
+            if (image_space != null) {
+                const win_width = window.innerWidth;
+                const win_height = window.innerHeight;
+                const img_width = 1920;      // 1920
+                const img_height = 1080;    // 1080 => 横：縦＝16：9
+
+                if (win_width / img_width > win_height / img_height) {
+                    if (win_height > img_height) {
+                        image_space.style.height = img_height + "px";
+                        image_space.style.width = img_width + "px";
+                    } else {
+                        image_space.style.height = win_height + "px";
+                        image_space.style.width = win_height * (16 / 9) + "px";
+                    }
                 } else {
-                    image_space.style.height = win_height + "px";
-                    image_space.style.width = win_height * (16 / 9) + "px";
+                    if (win_width > img_width) {
+                        image_space.style.width = img_width + "px";
+                        image_space.style.height = img_height + "px";
+                    } else {
+                        image_space.style.width = win_width + "px";
+                        image_space.style.height = win_width * (9 / 16) + "px";
+                    }
                 }
             } else {
-                if (win_width > img_width) {
-                    image_space.style.width = img_width + "px";
-                    image_space.style.height = img_height + "px";
-                } else {
-                    image_space.style.width = win_width + "px";
-                    image_space.style.height = win_width * (9 / 16) + "px";
-                }
+                console.log("image_space is null");
+                imageSizeSet();
             }
         }
     </script>
